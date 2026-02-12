@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import os
 
 from models import train_and_evaluate_models
 from sklearn.model_selection import train_test_split
@@ -51,6 +52,7 @@ if uploaded_file is not None:
     X_test_scaled = scaler.transform(X_test)
 
     # Save scaler
+    os.makedirs("model", exist_ok=True)
     joblib.dump(scaler, "model/scaler.pkl")
 
     # ======================

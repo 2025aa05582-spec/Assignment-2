@@ -82,11 +82,11 @@ if uploaded_file is not None:
         # ======================
 
         results_df, predictions = train_and_evaluate_models(
+            selected_model
             X_train,
             X_test,
             y_train,
             y_test,
-            selected_model
         )
 
         st.success("Training Completed!")

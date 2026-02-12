@@ -82,7 +82,7 @@ if uploaded_file is not None:
         # ======================
 
         results_df, predictions = train_and_evaluate_models(
-            selected_model
+            selected_model,
             X_train,
             X_test,
             y_train,

@@ -109,7 +109,7 @@ if uploaded_file is not None:
             st.success(f"Best Model (by Accuracy): {best_model}")
 
         if st.button("Train Model(s)"): 
-            results_df, model_train, pred = train_and_evaluate_models(
+            results_df, pred = train_and_evaluate_models(
                             X_train,
                             X_test,
                             y_train,
@@ -118,10 +118,28 @@ if uploaded_file is not None:
             
             st.success("Training Completed!")
 
-            st.subheader("{model_sel} Performance")
+            st.subheader(f"{model_sel} Performance")
+            if model_sel != "All Models":
+                model_name = model_sel
+            y_pred = pred[model_name]
+
+            st.subheader(f"Metrics for {model_name}")
             st.dataframe(results_df)
 
-            # Highlight Best Model
-            best_model = results_df["Accuracy"].astype(float).idxmax()
-            st.success(f"Best Model (by Accuracy): {best_model}")
+            # Confusion Matrix
+            cm = confusion_matrix(y_test, y_pred)
+
+            st.subheader("Confusion Matrix")
+
+            fig, ax = plt.subplots()
+            sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", ax=ax)
+            ax.set_xlabel("Predicted")
+            ax.set_ylabel("Actual")
+            ax.set_title(f"{model_name} Confusion Matrix")
+
+            st.pyplot(fig)
+            st.dataframe(results_df)
+
+            
+            
    

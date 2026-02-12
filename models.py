@@ -21,7 +21,7 @@ from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 
 
-def train_and_evaluate_models(X_train, X_test, y_train, y_test):
+def train_and_evaluate_models(model_sel, X_train, X_test, y_train, y_test):
 
     # Create model folder if not exists
     # os.makedirs("model", exist_ok=True)
@@ -36,6 +36,11 @@ def train_and_evaluate_models(X_train, X_test, y_train, y_test):
     }
 
     results = {}
+    model_train = {}
+    pred = {}
+
+    if model_sel and model_sel != "All Models":
+        models = {model_sel: models[model_sel]}
 
     for name, model in models.items():
 
@@ -72,7 +77,9 @@ def train_and_evaluate_models(X_train, X_test, y_train, y_test):
         # os.makedirs("model", exist_ok=True)
         # filename = name.lower().replace(" ", "_") + ".pkl"
         # joblib.dump(model, f"model/{filename}")
+        model_train[name] = model
+        pred[name] = y_pred
 
     results_df = pd.DataFrame(results).T
 
-    return results_df
+    return results_df, model_train, pred

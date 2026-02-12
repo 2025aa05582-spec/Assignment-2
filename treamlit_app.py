@@ -71,13 +71,28 @@ if uploaded_file is not None:
         X_train = scaler.fit_transform(X_train)
         X_test = scaler.transform(X_test)
 
+        model_options = [
+                "All Models",
+                "Logistic Regression",
+                "Decision Tree",
+                "KNN",
+                "Naive Bayes",
+                "Random Forest",
+                "XGBoost"
+            ]
+
+        model_sel = st.selectbox(
+            "Select Model to Train",
+            model_options
+        )
+
         # ======================
         # Train Models
         # ======================
 
         if st.button("Train All Classification Models"):
 
-            results_df = train_and_evaluate_models(
+            results_df, model_train, pred = train_and_evaluate_models(
                 X_train,
                 X_test,
                 y_train,
@@ -92,3 +107,21 @@ if uploaded_file is not None:
             # Highlight Best Model
             best_model = results_df["Accuracy"].astype(float).idxmax()
             st.success(f"Best Model (by Accuracy): {best_model}")
+
+        if st.button("Train Model(s)"): 
+            results_df, model_train, pred = train_and_evaluate_models(
+                            X_train,
+                            X_test,
+                            y_train,
+                            y_test,
+                            model_sel)
+            
+            st.success("Training Completed!")
+
+            st.subheader("{model_sel} Performance")
+            st.dataframe(results_df)
+
+            # Highlight Best Model
+            best_model = results_df["Accuracy"].astype(float).idxmax()
+            st.success(f"Best Model (by Accuracy): {best_model}")
+   

@@ -77,9 +77,9 @@ def train_and_evaluate_models(model_sel, X_train, X_test, y_train, y_test):
         # os.makedirs("model", exist_ok=True)
         # filename = name.lower().replace(" ", "_") + ".pkl"
         # joblib.dump(model, f"model/{filename}")
-        model_train[name] = model
+        # model_train[name] = model
         pred[name] = y_pred
 
     results_df = pd.DataFrame(results).T
 
-    return results_df, model_train, pred
+    return results_df, pred

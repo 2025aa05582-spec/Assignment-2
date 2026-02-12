@@ -24,7 +24,7 @@ from xgboost import XGBClassifier
 def train_and_evaluate_models(X_train, X_test, y_train, y_test):
 
     # Create model folder if not exists
-    os.makedirs("model", exist_ok=True)
+    # os.makedirs("model", exist_ok=True)
 
     models = {
         "Logistic Regression": LogisticRegression(max_iter=1000),
@@ -69,9 +69,9 @@ def train_and_evaluate_models(X_train, X_test, y_train, y_test):
         }
 
         # Save model
-        os.makedirs("model", exist_ok=True)
-        filename = name.lower().replace(" ", "_") + ".pkl"
-        joblib.dump(model, f"model/{filename}")
+        # os.makedirs("model", exist_ok=True)
+        # filename = name.lower().replace(" ", "_") + ".pkl"
+        # joblib.dump(model, f"model/{filename}")
 
     results_df = pd.DataFrame(results).T
 

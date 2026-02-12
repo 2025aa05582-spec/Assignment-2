@@ -95,6 +95,43 @@ if uploaded_file is not None:
         st.dataframe(results_df)
 
         # ======================
+        # Display Sample Predictions (First 10)
+        # ======================
+
+        st.subheader("Sample Predictions (First 10 Rows)")
+
+        # Convert y_test to Series (if numpy array)
+        y_test_series = pd.Series(y_test).reset_index(drop=True)
+
+        if selected_model == "All Models":
+
+            for model_name, y_pred in predictions.items():
+
+                st.markdown(f"### {model_name}")
+
+                y_pred_series = pd.Series(y_pred).reset_index(drop=True)
+
+                prediction_df = pd.DataFrame({
+                    "Actual": y_test_series[:10],
+                    "Predicted": y_pred_series[:10]
+                })
+
+                st.dataframe(prediction_df)
+
+        else:
+
+            y_pred = predictions[selected_model]
+            y_pred_series = pd.Series(y_pred).reset_index(drop=True)
+
+            prediction_df = pd.DataFrame({
+                "Actual": y_test_series[:10],
+                "Predicted": y_pred_series[:10]
+            })
+
+            st.dataframe(prediction_df)
+
+
+        # ======================
         # Confusion Matrix (Only for Single Model)
         # ======================
 

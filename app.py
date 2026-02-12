@@ -23,15 +23,11 @@ if uploaded_file is not None:
     st.subheader("Dataset Preview")
     st.dataframe(df.head())
 
-    # ======================
     # Select Target Column
-    # ======================
 
     target_column = st.selectbox("Select Target Column", df.columns)
 
-    # ======================
     # Select Model
-    # ======================
 
     model_options = [
         "All Models",
@@ -48,14 +44,14 @@ if uploaded_file is not None:
     if st.button("Train Model(s)"):
 
         # Separate features and target
-        X = df.drop(columns=[target_column])
+        x = df.drop(columns=[target_column])
         y = df[target_column]
 
         # ======================
         # Automatic Encoding
         # ======================
 
-        X = pd.get_dummies(X, drop_first=True)
+        X = pd.get_dummies(x, drop_first=True)
 
         if y.dtype == "object":
             le = LabelEncoder()
@@ -65,7 +61,7 @@ if uploaded_file is not None:
         # Train-Test Split
         # ======================
 
-        X_train, X_test, y_train, y_test = train_test_split(
+        x_train, x_test, y_train, y_test = train_test_split(
             X, y, test_size=0.2, random_state=42
         )
 
@@ -74,8 +70,8 @@ if uploaded_file is not None:
         # ======================
 
         scaler = StandardScaler()
-        X_train = scaler.fit_transform(X_train)
-        X_test = scaler.transform(X_test)
+        x_train = scaler.fit_transform(x_train)
+        x_test = scaler.transform(x_test)
 
         # ======================
         # Train Models

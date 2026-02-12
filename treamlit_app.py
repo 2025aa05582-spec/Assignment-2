@@ -5,6 +5,7 @@ import joblib
 from models import train_and_evaluate_models
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import LabelEncoder
 
 # ======================
 # Upload Dataset
@@ -26,6 +27,21 @@ if uploaded_file is not None:
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42
     )
+
+
+
+    # Encode categorical columns automatically
+    X = pd.get_dummies(X)
+
+    # If target is categorical, encode it too
+    if y.dtype == "object":
+        le = LabelEncoder()
+        y = le.fit_transform(y)
+
+    # Train test split
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+)
 
     # ======================
     # Scaling
